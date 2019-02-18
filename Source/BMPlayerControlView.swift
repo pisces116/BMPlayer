@@ -411,7 +411,7 @@ open class BMPlayerControlView: UIView {
         if playerLastState == .playedToTheEnd {
             return
         }
-        controlViewAnimation(isShow: !isMaskShowing,autoFadeOut: player?.isPlaying)
+        controlViewAnimation(isShow: !isMaskShowing,autoFadeOut: player??.isPlaying)
     }
     
     @objc open func onDoubleTapGestureRecognized(_ gesture: UITapGestureRecognizer) {
