@@ -379,14 +379,18 @@ open class BMPlayerControlView: UIView {
      - parameter button: action Button
      */
     @objc open func onButtonPressed(_ button: UIButton) {
-        autoFadeOutControlViewWithAnimation()
+        
         if let type = ButtonType(rawValue: button.tag) {
             switch type {
             case .play, .replay:
+                if player!.isPlaying {
+                   autoFadeOutControlViewWithAnimation()
+                }
                 if playerLastState == .playedToTheEnd {
                     hidePlayToTheEndView()
                 }
             default:
+                  autoFadeOutControlViewWithAnimation()
                 break
             }
         }
