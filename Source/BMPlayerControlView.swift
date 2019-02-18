@@ -254,7 +254,7 @@ open class BMPlayerControlView: UIView {
             }
             self.layoutIfNeeded()
         }) { (_) in
-            if isShow && player!.isPlaying {
+            if isShow && self.player!.isPlaying {
                 self.autoFadeOutControlViewWithAnimation()
             }
         }
