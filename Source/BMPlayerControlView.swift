@@ -157,7 +157,7 @@ open class BMPlayerControlView: UIView {
         case .playedToTheEnd:
             playButton.isSelected = false
             showPlayToTheEndView()
-            controlViewAnimation(isShow: true)
+            controlViewAnimation(isShow: true, autoFadeOut: true)
             
         default:
             break
@@ -213,7 +213,7 @@ open class BMPlayerControlView: UIView {
         cancelAutoFadeOutAnimation()
         delayItem = DispatchWorkItem { [weak self] in
             if self?.playerLastState != .playedToTheEnd {
-                self?.controlViewAnimation(isShow: false)
+                self?.controlViewAnimation(isShow: false,autoFadeOut: true)
             }
         }
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + BMPlayerConf.animateDelayTimeInterval,
@@ -232,10 +232,10 @@ open class BMPlayerControlView: UIView {
      
      - parameter isShow: is to show the controlview
      */
-    open func controlViewAnimation(isShow: Bool) {
+        open func controlViewAnimation(isShow: Bool, autoFadeOut: Bool) {
         let alpha: CGFloat = isShow ? 1.0 : 0.0
         self.isMaskShowing = isShow
-        let autoFadeOut = self.player!.isPlaying
+        //let autoFadeOut = self.player!.isPlaying
         
         UIApplication.shared.setStatusBarHidden(!isShow, with: .fade)
         
@@ -388,7 +388,7 @@ open class BMPlayerControlView: UIView {
                    autoFadeOutControlViewWithAnimation()
                 } else {
                     cancelAutoFadeOutAnimation()
-                    controlViewAnimation(isShow: true)
+                    controlViewAnimation(isShow: true, autoFadeOut: false)
                 }
 
                 if playerLastState == .playedToTheEnd {
@@ -411,7 +411,7 @@ open class BMPlayerControlView: UIView {
         if playerLastState == .playedToTheEnd {
             return
         }
-        controlViewAnimation(isShow: !isMaskShowing)
+        controlViewAnimation(isShow: !isMaskShowing,autoFadeOut: player?.isPlaying)
     }
     
     @objc open func onDoubleTapGestureRecognized(_ gesture: UITapGestureRecognizer) {
