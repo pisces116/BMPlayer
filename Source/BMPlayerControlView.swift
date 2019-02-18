@@ -235,6 +235,7 @@ open class BMPlayerControlView: UIView {
     open func controlViewAnimation(isShow: Bool) {
         let alpha: CGFloat = isShow ? 1.0 : 0.0
         self.isMaskShowing = isShow
+        let autoFadeOut = self.player!.isPlaying
         
         UIApplication.shared.setStatusBarHidden(!isShow, with: .fade)
         
@@ -254,7 +255,7 @@ open class BMPlayerControlView: UIView {
             }
             self.layoutIfNeeded()
         }) { (_) in
-            if isShow && self.player!.isPlaying {
+            if isShow && autoFadeOut {
                 self.autoFadeOutControlViewWithAnimation()
             }
         }
@@ -385,7 +386,11 @@ open class BMPlayerControlView: UIView {
             case .play, .replay:
                 if !player!.isPlaying {
                    autoFadeOutControlViewWithAnimation()
+                } else {
+                    cancelAutoFadeOutAnimation()
+                    controlViewAnimation(isShow: true)
                 }
+
                 if playerLastState == .playedToTheEnd {
                     hidePlayToTheEndView()
                 }
