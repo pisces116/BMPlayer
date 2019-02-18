@@ -383,7 +383,7 @@ open class BMPlayerControlView: UIView {
         if let type = ButtonType(rawValue: button.tag) {
             switch type {
             case .play, .replay:
-                if player!.isPlaying {
+                if !player!.isPlaying {
                    autoFadeOutControlViewWithAnimation()
                 }
                 if playerLastState == .playedToTheEnd {
